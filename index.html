@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Netflix Cinematic Proposal 💖</title>
+<title>Love_Proposal for Sekwa❤️❤️</title>
 
 <style>
 /* =========================
@@ -85,6 +85,17 @@ button {
     background: #ef4444;
     color: white;
     position: relative;
+}
+
+.secondImages {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.secondImages img {
+    width: 45%;
 }
 
 /* =========================
@@ -212,9 +223,19 @@ yesBtn.addEventListener("click", () => {
         "Into engizokuthandayo mbhemu😁❤️but to be honest, namanje ngisaxolisa about how things unfolded before, it was never my intention to make you feel ngaleyandlela. I liked you kakhulu and I still do, and as I have said countless times before namanje ngisasho angeke ngahluleka ukukthanda Mahlobo🥺❤️ " + "There's nothing I wouldn't do for you❤️. Your happiness would always come first coz that's how special you are kimi🥺❤️";
     message.classList.add("show");
 
-    const img2 = document.createElement("img");
-    img2.src = "https://i.imgur.com/J34dc8y.jpeg";
-    document.querySelector(".container").appendChild(img2);
+    const imageContainer = document.createElement("div");
+    imageContainer.className = "secondImages";
+
+    const imgLeft = document.createElement("img");
+    imgLeft.src = "https://i.imgur.com/J34dc8y.jpeg";
+      
+    const imgRight = document.createElement("img");
+    imgRight.src = "https://i.imgur.com/fuUfqWv.jpeg";
+      
+    imageContainer.appendChild(imgLeft);
+    imageContainer.appendChild(imgRight);
+
+document.querySelector(".container").appendChild(imageContainer);
 
     noBtn.remove();
     yesBtn.remove();
