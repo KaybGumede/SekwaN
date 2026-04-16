@@ -178,11 +178,6 @@ const question = document.getElementById("question");
 const message = document.getElementById("message");
 const music = document.getElementById("bgMusic");
 
-// MUSIC START
-document.body.addEventListener("click", () => {
-    music.play().catch(() => {});
-}, { once: true });
-
 // TYPEWRITER
 let i = 0;
 function typeWriter() {
@@ -221,8 +216,10 @@ noBtn.addEventListener("mouseenter", () => {
     }
 });
 
-// YES BUTTON
+// YES BUTTON (MUSIC PLAYS HERE ONLY)
 yesBtn.addEventListener("click", () => {
+
+    music.play().catch(() => {});
 
     question.innerText = "Forever thina 💕";
 
