@@ -6,9 +6,6 @@
 <title>Love_Proposal for Sekwa❤️❤️</title>
 
 <style>
-/* =========================
-   NETFLIX STYLE FADE-IN
-========================= */
 body {
     margin: 0;
     height: 100vh;
@@ -26,25 +23,28 @@ body {
     to { opacity: 1; }
 }
 
-/* =========================
-   MAIN LAYOUT
-========================= */
 .container {
     text-align: center;
     width: 90%;
     max-width: 500px;
 }
 
+/* ✨ SOFT GLOW ON TEXT */
 h1 {
     color: #ffffff;
     font-size: 1.6rem;
     min-height: 60px;
-    margin-bottom: 20px;
+    margin-bottom: 20px; 
+    text-shadow: 0 0 10px rgba(255,255,255,0.6),
+                 0 0 20px rgba(255,105,180,0.5);
+    animation: glowPulse 2s infinite alternate;
 }
 
-/* =========================
-   IMAGES
-========================= */
+@keyframes glowPulse {
+    from { text-shadow: 0 0 8px rgba(255,255,255,0.5); }
+    to { text-shadow: 0 0 18px rgba(255,105,180,0.9); }
+}
+
 img {
     width: 180px;
     border-radius: 15px;
@@ -57,9 +57,7 @@ img {
     font-size: 14px;
 }
 
-/* =========================
-   BUTTONS
-========================= */
+/* ✨ BUTTONS */
 .buttons {
     display: flex;
     justify-content: center;
@@ -73,7 +71,6 @@ button {
     border: none;
     border-radius: 12px;
     cursor: pointer;
-    transition: 0.3s;
 }
 
 #yesBtn {
@@ -87,6 +84,7 @@ button {
     position: relative;
 }
 
+/* ✨ SECOND PAGE IMAGES */
 .secondImages {
     display: flex;
     justify-content: space-between;
@@ -94,13 +92,30 @@ button {
     margin-top: 20px;
 }
 
+/* ✨ FADE-IN + GLOW */
 .secondImages img {
     width: 45%;
+    max-width: 180px;
+    opacity: 0;
+    transform: scale(0.9);
+    animation: fadeInImage 1.5s ease forwards;
+    box-shadow: 0 0 15px rgba(255,255,255,0.6),
+                0 0 25px rgba(255,105,180,0.5);
+    border-radius: 15px;
 }
 
-/* =========================
-   MESSAGE
-========================= */
+.secondImages img:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+@keyframes fadeInImage {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ✨ MESSAGE */
 #message {
     margin-top: 20px;
     font-size: 16px;
@@ -109,6 +124,7 @@ button {
     opacity: 0;
     transform: translateY(10px);
     transition: 1s ease;
+    text-shadow: 0 0 10px rgba(255,255,255,0.6);
 }
 
 #message.show {
@@ -116,9 +132,7 @@ button {
     transform: translateY(0);
 }
 
-/* =========================
-   HEARTS
-========================= */
+/* HEARTS */
 .heart {
     position: absolute;
     animation: float 6s linear forwards;
@@ -127,10 +141,9 @@ button {
 }
 
 @keyframes float {
-    from { transform: translateY(100vh) scale(1); opacity: 1; }
-    to { transform: translateY(-10vh) scale(1.3); opacity: 0; }
+    from { transform: translateY(100vh); opacity: 1; }
+    to { transform: translateY(-10vh); opacity: 0; }
 }
-
 </style>
 </head>
 
@@ -138,9 +151,8 @@ button {
 
 <div class="container">
 
-    <!-- IMAGE 1 -->
-    <img src="https://i.imgur.com/fuUfqWv.jpeg" alt="This could be US🥺">
-    <div class="caption">This could be US🥺</div>
+    <img id="firstImage" src="https://i.imgur.com/fuUfqWv.jpeg">
+    <div class="caption" id="caption">This could be US🥺</div>
 
     <h1 id="question"></h1>
 
@@ -153,7 +165,7 @@ button {
 </div>
 
 <audio id="bgMusic" loop>
-    <source src="music.mp3" type="audio/mp3">
+    <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -166,9 +178,12 @@ const question = document.getElementById("question");
 const message = document.getElementById("message");
 const music = document.getElementById("bgMusic");
 
-/* =========================
-   TYPEWRITER EFFECT
-========================= */
+// MUSIC START
+document.body.addEventListener("click", () => {
+    music.play().catch(() => {});
+}, { once: true });
+
+// TYPEWRITER
 let i = 0;
 function typeWriter() {
     if (i < text.length) {
@@ -177,9 +192,9 @@ function typeWriter() {
         setTimeout(typeWriter, 40);
     }
 }
-
 typeWriter();
 
+// NO BUTTON
 noBtn.addEventListener("click", () => {
     noClickCount++;
 
@@ -189,10 +204,12 @@ noBtn.addEventListener("click", () => {
         question.innerText = "Are you really really sure? Imina lo Mahlobo 🥺";
     } else if (noClickCount === 3) {
         question.innerText = "Last chance... 😢";
+    } else if (noClickCount === 4) {
+        question.innerText = "You can't escape me sisi wabantu😏 ";
     }
 });
 
-/* EVASIVE MODE */
+// MOVE BUTTON
 noBtn.addEventListener("mouseenter", () => {
     if (noClickCount >= 4) {
         const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
@@ -204,46 +221,42 @@ noBtn.addEventListener("mouseenter", () => {
     }
 });
 
-noBtn.addEventListener("click", () => {
-    if (noClickCount === 4) {
-        question.innerText = "You can't escape me sisi wabantu😏 ";
-    }
-});
-
-/* YES LOGIC */
+// YES BUTTON
 yesBtn.addEventListener("click", () => {
-
-    music.play();
 
     question.innerText = "Forever thina 💕";
 
     message.innerHTML =
         "You’ve made the happiest man alive❤️🫂<br><br>" +
-      
-        "Into engizokuthandayo mbhemu😁❤️but to be honest, namanje ngisaxolisa about how things unfolded before, it was never my intention to make you feel ngaleyandlela. I liked you kakhulu and I still do, and as I have said countless times before namanje ngisasho angeke ngahluleka ukukthanda Mahlobo🥺❤️ " + "There's nothing I wouldn't do for you❤️. Your happiness would always come first coz that's how special you are kimi🥺❤️";
+        "Into engizokuthanda yona mbhemu😁❤️but to be honest, namanje ngisaxolisa about how things unfolded before, it was never my intention to make you feel ngaleyandlela. I liked you kakhulu and I still do, and as I have said countless times before namanje ngisasho angeke ngahluleka ukukthanda Mahlobo🥺❤️ There's nothing I wouldn't do for you❤️. Your happiness would always come first coz that's how special you are kimi🥺❤️";
+
     message.classList.add("show");
+
+    document.getElementById("firstImage").remove();
+    document.getElementById("caption").remove();
 
     const imageContainer = document.createElement("div");
     imageContainer.className = "secondImages";
 
     const imgLeft = document.createElement("img");
-    imgLeft.src = "https://i.imgur.com/J34dc8y.jpeg";
-      
+    imgLeft.src = "https://i.imgur.com/TUZ0jAb.jpeg";
+
     const imgRight = document.createElement("img");
-    imgRight.src = "https://i.imgur.com/fuUfqWv.jpeg";
-      
+    imgRight.src = "https://i.imgur.com/J34dc8y.jpeg";
+
     imageContainer.appendChild(imgLeft);
     imageContainer.appendChild(imgRight);
 
-document.querySelector(".container").appendChild(imageContainer);
+    document.querySelector(".container").appendChild(imageContainer);
 
     noBtn.remove();
     yesBtn.remove();
 
-    startCinematicHearts();
+    startHearts();
 });
 
-function startCinematicHearts() {
+// HEARTS
+function startHearts() {
     setInterval(() => {
         const heart = document.createElement("div");
         heart.className = "heart";
